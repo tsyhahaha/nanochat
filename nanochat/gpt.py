@@ -71,11 +71,11 @@ class CausalSelfAttention(nn.Module):
         self.n_embd = config.n_embd
         self.head_dim = self.n_embd // self.n_head
         assert self.n_embd % self.n_head == 0
-        assert self.n_kv_head <= self.n_head and self.n_head % self.n_kv_head == 0
-        self.c_q = Linear(self.n_embd, self.n_head * self.head_dim, bias=False)
-        self.c_k = Linear(self.n_embd, self.n_kv_head * self.head_dim, bias=False)
-        self.c_v = Linear(self.n_embd, self.n_kv_head * self.head_dim, bias=False)
-        self.c_proj = Linear(self.n_embd, self.n_embd, bias=False)
+        assert self.n_kv_head <= self.n_head and self.n_head % self.n_kv_head == 0  # for GQA: n_q_head % n_kv_head == 0
+        self.c_q = Linear(self.n_embd, self.n_head * self.head_dim, bias=False)     # W_q (d_model, d_k * n_head)
+        self.c_k = Linear(self.n_embd, self.n_kv_head * self.head_dim, bias=False)  # W_k (d_model, d_k * n_kv_head)
+        self.c_v = Linear(self.n_embd, self.n_kv_head * self.head_dim, bias=False)  # W_v (d_model, d_v * n_kv_head)
+        self.c_proj = Linear(self.n_embd, self.n_embd, bias=False) # W_proj (d_model, d_model)
         self.ve_gate_channels = 12
         self.ve_gate = Linear(self.ve_gate_channels, self.n_kv_head, bias=False) if has_ve(layer_idx, config.n_layer) else None
 

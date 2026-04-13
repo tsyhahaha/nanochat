@@ -125,6 +125,10 @@ logger = logging.getLogger(__name__)
 - For distributed training, use `torchrun` with proper env vars (RANK, LOCAL_RANK, WORLD_SIZE)
 - Set seeds explicitly: `torch.manual_seed(42)` (not global rng for model weight init)
 
+### Documentation Guidelines
+- **Reference `dev/`:** When writing documentation (e.g., `docs/xxx.md`) or developing project `.py` files, you **must** reference the files in the `dev/` directory, with special attention to `dev/LOG.md`.
+- **Decouple Insights:** The primary goal is to gradually decouple and extract the insights, context, and experimental findings currently recorded in `dev/LOG.md` into the relevant code files and formal structured documentation in `docs/`.
+
 ### File Structure
 ```
 nanochat/           # Core library
@@ -154,6 +158,17 @@ scripts/            # Entry points
 tests/              # Test files
 ├── test_engine.py
 └── test_attention_fallback.py
+
+dev/                # Research, experiments, and logging
+├── LEADERBOARD.md              # Project leaderboard or benchmark tracking
+├── LOG.md                      # Central insight log - MUST be referenced and decoupled into code/docs
+├── estimate_gpt3_core.ipynb    # Modeling estimates for GPT-3 core concepts
+├── gen_synthetic_data.py       # Script for generating synthetic training data
+├── generate_logo.html          # Logo generation utility
+├── nanochat.png                # Project asset
+├── repackage_data_reference.py # Data repackaging utilities
+├── scaling_analysis.ipynb      # Scaling laws analysis notebook
+└── scaling_laws_jan26.png      # Scaling laws plot and data
 ```
 
 ### Running Single Tests
